@@ -3,7 +3,8 @@ phone_book = {'sasha': '0631456677', 'masha': '0928763456'}
 def input_error(func):
     def wrapper(name):
         try:
-            if name.split(" ")[2].isdigit():
+            fon_number = name.split(" ")[2]
+            if fon_number.isdigit():
                 my_dict = {name.split(" ")[1]: name.split(" ")[2]}
                 result = func(my_dict)
             else:
@@ -14,9 +15,17 @@ def input_error(func):
     return wrapper
 
 @input_error
-def add_and_change_contact(name):
+def add_contact(name):
     phone_book.update(name)
     return 'Saved'
+
+@input_error
+def change_contact(name):
+    if phone_book.get(list(name.keys())[0]):
+        phone_book.update(name)
+        return 'Saved'
+    else:
+        return 'There is no such contact'
 
 def show_all():
     contacts = ''
@@ -34,9 +43,9 @@ def command_parser(command):
     if command.split(" ")[0] == 'hello':
         return 'How can I help you?'
     elif command.split(" ")[0] == 'add':
-        return add_and_change_contact(command)
+        return add_contact(command)
     elif command.split(" ")[0] == 'change':
-        return add_and_change_contact(command)
+        return change_contact(command)
     elif command.split(" ")[0] == 'phone':
         return show_phone(command)
     elif 'show all' in command:
@@ -47,11 +56,15 @@ def command_parser(command):
         return "Unknown command"
 
 def main():
-    while True:
+    input_var = ''
+    while input_var not in ["good bye", "close", "exit"]:
         print("\nEnter the command: ")
-        command = command_parser(input().lower())
+        raw_input = input().lower()
+        command = command_parser(raw_input)
         print(command)
-        if command == "Good bye!":
-            break
+        input_var = raw_input
+    else:
+        pass
 
-main()
+if __name__ == "__main__":
+    main()
