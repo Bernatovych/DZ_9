@@ -3,8 +3,8 @@ phone_book = {'sasha': '0631456677', 'masha': '0928763456'}
 def input_error(func):
     def wrapper(name):
         try:
-            fon_number = name.split(" ")[2]
-            if fon_number.isdigit():
+            phone_number = name.split(" ")[2]
+            if phone_number.isdigit():
                 my_dict = {name.split(" ")[1]: name.split(" ")[2]}
                 result = func(my_dict)
             else:
