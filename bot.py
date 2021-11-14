@@ -56,15 +56,13 @@ def command_parser(command):
         return "Unknown command"
 
 def main():
-    input_var = ''
-    while input_var not in ["good bye", "close", "exit"]:
+    input_command = None
+    while input_command not in ["good bye", "close", "exit"]:
         print("\nEnter the command: ")
         raw_input = input().lower()
         command = command_parser(raw_input)
         print(command)
-        input_var = raw_input
-    else:
-        pass
+        input_command = raw_input
 
 if __name__ == "__main__":
     main()
